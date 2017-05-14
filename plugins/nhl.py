@@ -1,6 +1,6 @@
 import datetime
-import pytz
 
+import pytz
 import requests
 
 from cloudbot import hook
