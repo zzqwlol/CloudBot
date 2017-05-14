@@ -146,31 +146,9 @@ def ncaafScores(chan, text=" "):
     score = response.text_content()
     raw=score.replace('%20',' ')
     raw=raw.replace('^','')
-    raw=raw.replace('&','\n') 
+    raw=raw.replace('&','\n')
     raw=raw.replace('%26','&')
     pattern = re.compile("ncf_s_left\d+=(.*)")
-    for match in re.findall(pattern, raw):
-        if text.lower() in match.lower():
-            game = game +  match + " | "
-    game = smart_truncate(game)
-    game = game[:-2]
-    game = two_lines(game, chan)
-    if len(search_pages[chan]) > 1:
-        return "{}(page {}/{}) .morescore".format(game, search_pages[chan+"index"] + 1, len(search_pages[chan]))
-    return(game)
-
-@hook.command("nhl", autohelp=False)
-def nhlScores(chan, text=" "):
-    """nhl <team city> gets the score or next scheduled game for the specified team. If no team is specified all games will be included."""
-    search_pages[chan] = []
-    search_pages[chan+"index"] = 0
-    response = http.get_html('http://scores.espn.go.com/nhl/bottomline/scores', decode=False)
-    game = ""
-    score = response.text_content()
-    raw=score.replace('%20',' ')
-    raw=raw.replace('^','')
-    raw=raw.replace('&','\n')
-    pattern = re.compile("nhl_s_left\d+=(.*)")
     for match in re.findall(pattern, raw):
         if text.lower() in match.lower():
             game = game +  match + " | "
